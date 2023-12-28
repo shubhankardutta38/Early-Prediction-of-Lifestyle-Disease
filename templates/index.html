@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+  <link rel="stylesheet" href="D:/ML model deploy/templates/style.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"
+    integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css"
+    integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+  <title>Heart Disease Prediction</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ffffff;
+      margin: 0;
+    }
+
+    h1 {
+      background-color: #e74c3c;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+      /* display: flex; */
+      align-items: center;
+    }
+
+    .container {
+      margin-top: 50px;
+      margin: auto;
+      width: 70%;
+      height: auto;
+      padding: 2px;
+      text-align: center;
+
+    }
+
+    form {
+      background-color: #ffffff;
+      padding: 48px;
+      border-radius: 28px;
+      box-shadow: 0 0 17px #000;
+      width: 80%;
+      margin: 11px auto;
+      /* Center the form horizontally */
+      max-width: 800px;
+      position: static;
+      top: 50%;
+      left: 50%;
+      box-shadow: 0 0 10px rgba(89, 199, 25, 0.693);
+    }
+
+    label {
+      display: block;
+      margin-bottom: -3px;
+      /* Adjust this value to set the desired gap */
+      font-weight: bold;
+      text-align: left;
+    }
+
+    select {
+      width: 100%;
+      padding: 4px;
+      margin-bottom: 10px;
+      /* Match the margin with label for consistent gap */
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      height: 40px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 3px;
+      margin-bottom: 10px;
+      /* Match the margin with label for consistent gap */
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      height: 37px;
+      text-align-last: center;
+      font-size: medium;
+    }
+
+    input[type="submit"] {
+      background-color: #4caf50;
+      color: white;
+      padding: 17px 21px;
+      font-size: large;
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #047909;
+    }
+
+    h2 {
+      margin-top: 20px;
+      color: #000;
+      text-align: center;
+      font-family: serif;
+      padding-top: 29px;
+      margin-bottom: -13px;
+    }
+
+    .res {
+      color: #f00;
+      font-family: cursive;
+      font-size: 22px;
+      font-variant: petite-caps;
+      text-align: center;
+    }
+
+
+
+    a {
+      color: #006eff;
+      text-decoration: underline;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: large;
+
+    }
+
+    .links {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .appointment {
+      text-align: right;
+      margin-top: 20px;
+      padding-bottom: 18px;
+      padding-right: 4px;
+    }
+
+    .health-tips {
+      text-align: left;
+      margin-top: 20px;
+      padding-bottom: 18px;
+      padding-right: 4px;
+    }
+
+    .footer-container {
+      text-align: center;
+      background-color: rgb(1, 24, 24);
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Heart Disease Prediction</h1>
+  <div class="container">
+    <form action="/predict" method="post">
+      <label for="age">Age:</label><br />
+      <select id="AgeCategory" name="AgeCategory" required autofocus>
+        <option value="" disabled selected>Select your age category</option>
+        <option value="6">0-17</option>
+        <option value="21">18-24</option>
+        <option value="27">25-29</option>
+        <option value="33">30-34</option>
+        <option value="37">35-39</option>
+        <option value="42">40-44</option>
+        <option value="47">45-49</option>
+        <option value="52">50-54</option>
+        <option value="57">55-59</option>
+        <option value="62">60-64</option>
+        <option value="67">65-69</option>
+        <option value="73">70-74</option>
+        <option value="78">75-79</option>
+        <option value="80">80 or older</option>
+      </select><br /><br />
+
+      <label for="Sex">Sex:</label><br />
+      <select id="Sex" name="Sex" required>
+        <option value="" disabled selected>Select your gender</option>
+        <option value="0">Male</option>
+        <option value="1">Female</option>
+      </select><br /><br />
+
+      <label for="BMI">Body mass index(BMI)</label><br />
+      <input type="text" id="bmi" name="bmi" required
+        placeholder="Enter your BMI (e.g., 22) - BMI is calculated as weight(kg) / height(m)^2" /><br /><br />
+
+      <label for="smoking">Smoking Status:</label><br />
+      <select id="smoking" name="smoking" required>
+        <option value="" disabled selected>Select your smoking status</option>
+        <option value="0">No, I do not smoke</option>
+        <option value="1">Yes, I am a smoker</option>
+      </select><br /><br />
+
+      <label for="Alcohol">Alcohol Consumption:</label><br />
+      <select id="alcohol" name="alcohol" required>
+        <option value="" disabled selected>Select your alcohol consumption status</option>
+        <option value="0">No, I do not consume alcohol</option>
+        <option value="1">Yes, I consume alcohol</option>
+      </select><br /><br />
+
+      <label for="Stroke">History of Stroke:</label><br />
+      <select id="stroke" name="stroke" required>
+        <option value="" disabled selected>Select your history of stroke</option>
+        <option value="0">No, I have not had a stroke</option>
+        <option value="1">Yes, I have had a stroke</option>
+      </select><br /><br />
+
+      <label for="Physical health">Physical Health (On a scale from 0 to 30, where 0 is Bad and 30 is Very
+        Good)</label><br />
+      <input type="text" id="physical_health" name="physical_health" required
+        placeholder="Enter your current physical health score (e.g., 24)" /><br /><br />
+
+      <label for="Mental health">Mental Health (On a scale from 0 to 30, where 0 is Bad and 30 is Very
+        Good)</label><br />
+      <input type="text" id="mental_health" name="mental_health" required
+        placeholder="Enter your current mental health score (e.g., 24)" /><br /><br />
+
+      <label for="DiffWalking">Difficulty in Walking:</label><br />
+      <select id="DiffWalking" name="DiffWalking" required>
+        <option value="" disabled selected>Select your difficulty in walking status</option>
+        <option value="0">No, I do not have difficulty in walking</option>
+        <option value="1">Yes, I have difficulty in walking</option>
+      </select><br /><br />
+
+      <label for="Diabetic">Diabetic:</label><br />
+      <select id="diabetic" name="diabetic" required>
+        <option value="" disabled selected>Select your diabetic status</option>
+        <option value="0">No, I am not diabetic</option>
+        <option value="1">Yes, I am diabetic</option>
+      </select><br /><br />
+
+
+      <label for="PhysicallyActive">Physically Active:</label><br />
+      <select id="physically_active" name="physically_active" required>
+        <option value="" disabled selected>Select your physical activity level</option>
+        <option value="0">No, I am not physically active</option>
+        <option value="1">Yes, I am physically active</option>
+      </select><br /><br />
+
+      <label for="GeneralHealth">General Health:</label><br />
+      <select id="general_health" name="general_health" required>
+        <option value="" disabled selected>Select your general health status</option>
+        <option value="0">Poor</option>
+        <option value="1">Fair</option>
+        <option value="2">Good</option>
+        <option value="3">Very Good</option>
+        <option value="4">Excellent</option>
+      </select><br /><br />
+
+
+      <label for="Sleep Time">Sleep Time(Hr)</label><br />
+      <input type="text" id="sleep_time" name="sleep_time" required
+        placeholder="Enter your average nightly sleep duration (e.g., 7 hours)" /><br /><br /><br />
+
+      <label for="Asthma">Do you have Asthma?</label><br />
+      <select id="Asthma" name="Asthma" required>
+        <option value="" disabled selected>Select your Asthma status</option>
+        <option value="0">No, I do not have Asthma</option>
+        <option value="1">Yes, I have Asthma</option>
+      </select><br /><br />
+
+      <label for="KidneyDisease">Do you have Kidney Disease?</label><br />
+      <select id="KidneyDisease" name="KidneyDisease" required>
+        <option value="" disabled selected>Select your Kidney Disease status</option>
+        <option value="0">No, I do not have Kidney Disease</option>
+        <option value="1">Yes, I have Kidney Disease</option>
+      </select><br /><br />
+
+      <label for="SkinCancer">Do you have Skin Cancer?</label><br />
+      <select id="SkinCancer" name="SkinCancer" required>
+        <option value="" disabled selected>Select your Skin Cancer status</option>
+        <option value="0">No, I do not have Skin Cancer</option>
+        <option value="1">Yes, I have Skin Cancer</option>
+      </select><br /><br />
+
+
+      <input type="submit" value="Predict" />
+    </form>
+  </div>
+  {% if result %}
+  <h2>-: Result :-</h2>
+  <p class="res">{{ result }}</p>
+  {% endif %}
+  <div class="links">
+    <div class="health-tips">
+      <a href="https://www.nhs.uk/conditions/coronary-heart-disease/prevention/" class="Health_Tips_link"
+        target="_blank" rel="noopener noreferrer">
+        <span class="icon-calendar"></span>
+        Awareness and Prevention of Heart Disease
+    </div>
+    <div class="appointment">
+      <a href="https://www.maxhealthcare.in/" class="appointment-link" target="_blank" rel="noopener noreferrer">
+        <span class="icon-calendar"></span>
+        Need medical assistance? Book an Appointment
+      </a>
+    </div>
+
+  </div>
+  <footer>
+    <div class="footer-container">
+      <p>&copy; 2023 Heart Disease Prediction. All rights reserved.</p>
+      <p>Contact us : G-40 ,Presidency University,Bengaluru<br>
+        Rajankunte,Yelahanka,Bengaluru<br>
+        Karnataka - 560064</p>
+    </div>
+  </footer>
+</body>
+<script>
+  $(document).ready(function () {
+    $("select").selectize({
+      sortField: "text",
+    });
+  });
+</script>
+
+</html>
