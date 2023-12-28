@@ -56,3 +56,15 @@ The application uses a combination of Support Vector Machine (SVM) and Random Fo
 15. Kidney Disease
 16. Skin Cancer
 
+# Output :
+
+<img width="1440" alt="Screenshot 2023-12-28 at 8 22 55 PM" src="https://github.com/Ayusht323/Early-Prediction-of-Lifestyle-Disease/assets/129721532/7b9eeec2-9472-4c15-b402-e4efb091e9e7">
+
+<img width="1440" alt="Screenshot 2023-12-28 at 8 23 56 PM" src="https://github.com/Ayusht323/Early-Prediction-of-Lifestyle-Disease/assets/129721532/c4b349f1-db95-44f5-bf0f-7f6722faa97b">
+
+
+
+
+
+
+
